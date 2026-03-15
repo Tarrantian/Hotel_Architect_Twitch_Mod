@@ -170,7 +170,7 @@ That's it! The mod hooks load automatically with the game. Viewers can now type 
 Hotel Architect\HotelArchitect\Binaries\Win64\
 ├── ue4ss\
 │   ├── Mods\
-│   │   ├── mods.txt               ← add "TwitchMod : 1" here
+│   │   ├── mods.txt               ← add "TwitchMod : 1" & "LuaConsole : 1" here
 │   │   └── TwitchMod\
 │   │       ├── Scripts\
 │   │       │   └── main.lua       ← the game mod
