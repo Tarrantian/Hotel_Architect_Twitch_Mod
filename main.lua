@@ -4,7 +4,6 @@ local ASSIGNED_FILE = MOD_DIR .. "assigned.txt"
 local CHECKEDOUT_FILE = MOD_DIR .. "checkedout.txt"
 local STAFF_QUEUE_FILE = MOD_DIR .. "staffqueue.txt"
 local STAFF_ASSIGNED_FILE = MOD_DIR .. "staffassigned.txt"
-
 local ARCADE_DONE_FILE = MOD_DIR .. "arcadedone.txt"
 local STAFF_QUIT_FILE = MOD_DIR .. "staffquit.txt"
 
