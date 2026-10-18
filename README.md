@@ -53,12 +53,10 @@ Let your Twitch viewers check into your hotel — or join the staff! Viewers typ
 
 ### Part 1 — UE4SS Setup
 
-> **Read this first.** Hotel Architect runs on Unreal Engine 5.7. The **stable** UE4SS release does
-> not support UE 5.7 — it fails during startup, never finishes loading, and the mod never runs. You
-> need an **experimental** build. See [Troubleshooting](#troubleshooting) for what the failure looks like.
+Built and tested against **UE4SS `v3.0.1-1181-g83330635`**, with the Hotel Architect build dated 28 September 2026.
 
-1. Go to [github.com/UE4SS-RE/RE-UE4SS/releases](https://github.com/UE4SS-RE/RE-UE4SS/releases) and find the release tagged **`experimental-latest`** (marked "Pre-release"). Do not use the release marked "Latest".
-2. Expand **Assets** and download the plain build — it's named `UE4SS_v3.x.x-####-########.zip`. Skip the one starting `zDEV-`; that's a debug build and it will slow your game down.
+1. Go to [github.com/UE4SS-RE/RE-UE4SS/releases](https://github.com/UE4SS-RE/RE-UE4SS/releases) and open the release tagged **`experimental-latest`** — the one marked "Pre-release".
+2. Expand **Assets** and download `UE4SS_v3.x.x-####-########.zip`. Skip the one starting `zDEV-`; that's a debug build and it will slow your game down.
 3. **Unblock the zip before extracting it.** Right-click the downloaded file → **Properties** → if there's an **Unblock** checkbox at the bottom of the General tab, tick it and click OK. Windows blocks DLLs downloaded from the internet, and a blocked loader fails silently with no error.
 4. Extract the zip somewhere neutral, like your Desktop. Inside you'll find a `ue4ss` folder and a `dwmapi.dll` file.
 5. Copy **both** of them into your Hotel Architect binaries folder:
@@ -72,7 +70,7 @@ Let your Twitch viewers check into your hotel — or join the staff! Viewers typ
    bUseUObjectArrayCache = true
    ```
 
-**Verified working with:** UE4SS `v3.0.1-1181-g83330635` and the Hotel Architect build dated 28 September 2026. If a later game update breaks the mod, a newer `experimental-latest` is the first thing to try.
+If a future Hotel Architect update breaks the mod, a newer `experimental-latest` build is the first thing to try.
 
 ### Part 2 — Lua Mod Setup
 
@@ -105,7 +103,7 @@ Let your Twitch viewers check into your hotel — or join the staff! Viewers typ
    ```
    TwitchMod : 1
    ```
-   Leave `Keybinds : 1` at the bottom — the file says "do not move up!" and it means it.
+   Leave `Keybinds : 1` at the bottom; the file's own comment says not to move it up.
 
    In `mods.json`, add this block directly **before** the `Keybinds` entry:
    ```json
@@ -114,7 +112,7 @@ Let your Twitch viewers check into your hotel — or join the staff! Viewers typ
            "mod_enabled": true
        },
    ```
-   Mind the commas: your new block ends with `},` while the `Keybinds` block after it still ends
+   Note the commas: your new block ends with `},` while the `Keybinds` block after it still ends
    with a plain `}` before the closing `]`.
 
 5. **Update the path in `main.lua`** — open the file and change the `MOD_DIR` at the top to match your installation:
@@ -176,9 +174,8 @@ That's it! The mod hooks load automatically with the game. Viewers can now type 
 
 **Nothing gets renamed, and the log repeats "Scan failed"**
 
-This is the most common failure, and the bot gives you no hint about it — it still connects to
-Twitch and answers commands perfectly, so everything looks fine until you notice nobody is being
-renamed.
+The bot gives no hint about this one. It still connects to Twitch and answers commands, so the
+setup looks fine until you notice nobody is being renamed.
 
 Look in the log for a block like this, repeating:
 ```
@@ -196,12 +193,11 @@ never loads and no hooks are ever registered.
 
 **Fix:** redo [Part 1](#part-1--ue4ss-setup) using the `experimental-latest` build.
 
-The retrying stops on its own after `SecondsToScanBeforeGivingUp` (120 by default), but it pegs a CPU
-core and spins your fans up until it does.
+The retrying stops on its own after `SecondsToScanBeforeGivingUp` seconds, 120 by default.
 
 **The UE4SS console window doesn't appear**
 
-Some builds start without a visible console. That's not a fault — everything still goes to the log:
+Some builds start without a visible console. Everything still goes to the log:
 ```
 ...\Binaries\Win64\ue4ss\UE4SS.log
 ```
@@ -227,10 +223,12 @@ launch, UE4SS is loading fine.
 
 ```
 Hotel Architect\HotelArchitect\Binaries\Win64\
+├── dwmapi.dll                     ← UE4SS loader
 ├── ue4ss\
 │   ├── Mods\
 │   │   ├── mods.txt               ← add "TwitchMod : 1" here
 │   │   ├── mods.json              ← add the TwitchMod block here too
+│   │   ├── ...                    ← UE4SS's built-in mods
 │   │   └── TwitchMod\
 │   │       ├── Scripts\
 │   │       │   └── main.lua       ← the game mod
@@ -241,7 +239,7 @@ Hotel Architect\HotelArchitect\Binaries\Win64\
 │   │       ├── staffassigned.txt  ← staff assignment log (append-only)
 │   │       ├── staffslots.txt     ← open slot count (written by Lua)
 │   │       ├── arcadedone.txt     ← arcade completions (written by Lua)
-│   │       └── staffquit.txt     ← staff quit requests (written by bot)
+│   │       └── staffquit.txt      ← staff quit requests (written by bot)
 │   ├── UE4SS-settings.ini
 │   └── UE4SS.log                  ← check here first when something goes wrong
 │
@@ -249,6 +247,7 @@ C:\TwitchBot\
 ├── bot.js                         ← the Twitch bot
 ├── scores.json                    ← persistent all-time arcade leaderboard
 ├── package.json
+├── package-lock.json
 └── node_modules\
 ```
 
