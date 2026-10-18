@@ -16,9 +16,10 @@ Let your Twitch viewers check into your hotel — or join the staff! Viewers typ
 **Staff:**
 1. Viewer types `!staff` in Twitch chat
 2. If there's an unclaimed staff member, they get renamed to the viewer — first come, first served!
-3. If all staff are already claimed: "Sorry, no job openings currently!"
+3. If all staff are already claimed, the bot says there are no openings and suggests trying again after new hires
 4. When the streamer hires new staff, a slot opens up and viewers can race to claim it
-5. A viewer can be a guest or staff, but not both at the same time
+5. A staff member can type `!quit` to leave and free their slot for someone else
+6. A viewer can be a guest or staff, but not both at the same time
 
 **Arcade Leaderboard:**
 - When a Twitch guest uses the arcade machine in-game, the mod detects it automatically
@@ -139,8 +140,8 @@ If a future Hotel Architect update breaks the mod, a newer `experimental-latest`
 
 5. **Update the config at the top of `bot.js`:**
    ```javascript
-   const TWITCH_CHANNEL = 'your_channel_name'; // your Twitch username (lowercase)
-   const BOT_USERNAME = 'your_channel_name';   // same as above
+   const TWITCH_CHANNEL = 'YOUR_CHANNEL_NAME'; // your Twitch username (lowercase)
+   const BOT_USERNAME = 'YOUR_CHANNEL_NAME';   // same as above
    ```
    And update the password line:
    ```javascript
